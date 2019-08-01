@@ -1,0 +1,10 @@
+Started on Aug 1, 2019 10:30:00 PM
+Using strategy: Default
+[poll] Last Built Revision: Revision bd2bce3cc1923a4ed7b042f37f65586f43fbf708 (refs/remotes/origin/master)
+No credentials specified
+ > git --version # timeout=10
+ > git ls-remote -h https://github.com/amitvashist7/devops-acc-29072019.git # timeout=10
+Found 3 remote heads on https://github.com/amitvashist7/devops-acc-29072019.git
+[poll] Latest remote head revision on refs/heads/master is: bd2bce3cc1923a4ed7b042f37f65586f43fbf708 - already built by 40
+Done. Took 1.2 sec
+No changes

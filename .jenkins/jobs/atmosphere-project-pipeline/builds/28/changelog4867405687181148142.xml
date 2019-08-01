@@ -1,0 +1,11 @@
+commit 10a6efcc209d20d6ddcc038094b8f5e5a9b1cba4
+tree 2fba1309f2dbd3b6903cc218bc34a9c5b20f4b50
+parent bd5c95a13edacc1e47058bd552e03f75272d7ae8
+author Amit Vashist <amitvashist7@gmail.com> 2019-08-01 07:24:14 +0000
+committer Amit Vashist <amitvashist7@gmail.com> 2019-08-01 07:24:14 +0000
+
+    Pipeline has been fixed
+
+
+
+:100644 100644 65245b824f57d9eaea3f67e323200182fac7b529 a35a0a7396085ba0b0a5f80dc4277e565a3694de M	Jenkins/test

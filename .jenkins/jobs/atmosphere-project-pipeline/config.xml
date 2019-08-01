@@ -1,0 +1,72 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.33">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.SCMTrigger>
+          <spec>*/10 * * * *</spec>
+          <ignorePostCommitHooks>false</ignorePostCommitHooks>
+        </hudson.triggers.SCMTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.72">
+    <script>node {
+
+notify(&apos;Job has been Initated&apos;)
+
+try {
+    
+stage(&apos;CheckOut Repo&apos;) {    
+   git &apos;https://github.com/amitvashist7/devops-acc-29072019.git&apos;
+}
+  
+  
+  def Project_Path = &quot;atmosphere/spring-boot-samples/spring-boot-sample-atmosphere&quot;
+  
+ dir (Project_Path) { 
+ stage(&apos;Clean my Repo&apos;) {
+   sh label: &apos;&apos;, script: &apos;mvn clean&apos;
+ }
+ stage(&apos;Comiple my Code&apos;) {
+   sh label: &apos;&apos;, script: &apos;mvn compilf&apos;
+ }
+ stage(&apos;Build Atmosphere Package&apos;) {
+   sh label: &apos;&apos;, script: &apos;mvn package&apos;
+ }
+
+ stage(&apos;Stage Deployment in Docker Env.&apos;) {
+   sh label: &apos;&apos;, script: &apos;docker-compose up -d --build&apos;
+} 
+
+ }
+ stage(&apos;Archive my Artifacts&apos;) {
+ archiveArtifacts &quot;${Project_Path}/target/*.jar&quot;
+ }
+
+notify (&apos;Job has been completed&apos;)
+} catch (err) {
+  notify(&quot;Error ${err}&quot;)
+  currentBuild.result = &apos;FAILURE&apos;
+}
+}
+
+
+def notify(status){
+    emailext (
+	to: &quot;amitvashist7@gmail.com&quot;,
+	subject: &quot;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;&quot;,
+	 body: &quot;&quot;&quot;&lt;p&gt;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;:&lt;/p&gt;
+	&lt;p&gt;Check console output at &lt;a href=&apos;${env.BUILD_URL}&apos;&gt;${env.JOB_NAME} [${env.BUILD_NUMBER}]&lt;/a&gt;&lt;/p&gt;&quot;&quot;&quot;,
+		)
+	}
+
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
